@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/db";
-import { PaymentStatus } from "@prisma/client";
+import { PaymentStatus, Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export interface CreateOrderInput {
@@ -70,7 +70,7 @@ export async function createOrder(input: CreateOrderInput) {
 
   try {
     // Jalankan seluruh pengecekan dan penulisan DB dalam 1 Transaksi untuk mencegah data tidak konsisten/bentrok stok
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       let discountAmount = 0;
       let promoId: string | undefined;
       let subtotal = 0;

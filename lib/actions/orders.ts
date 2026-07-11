@@ -175,17 +175,65 @@ export async function createOrder(input: CreateOrderInput) {
       return order;
     });
 
-    // e. Simulasi pembuatan URL Pembayaran (di masa depan bisa diintegrasikan dengan Midtrans snap token)
-    const mockTransactionId = `TRX-${result.id.slice(-8).toUpperCase()}`;
-    const mockPaymentToken = `MOCK-TOKEN-${result.id.slice(-8)}`;
-    const mockPaymentUrl = `https://app.sandbox.midtrans.com/snap/v2/vtweb/${mockPaymentToken}`;
+    // e. Pembuatan Snap Token dari Midtrans
+    let paymentToken = `MOCK-TOKEN-${result.id.slice(-8)}`;
+    let paymentUrl = `https://app.sandbox.midtrans.com/snap/v2/vtweb/${paymentToken}`;
+    let transactionId = `TRX-${result.id.slice(-8).toUpperCase()}`;
 
-    // Update pesanan dengan URL pembayaran dan transactionId simulasi
+    const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY;
+    if (MIDTRANS_SERVER_KEY) {
+      try {
+        const base64Key = Buffer.from(MIDTRANS_SERVER_KEY + ":").toString("base64");
+        const isProduction = process.env.MIDTRANS_IS_PRODUCTION === "true";
+        const midtransUrl = isProduction 
+          ? "https://app.midtrans.com/snap/v1/transactions"
+          : "https://app.sandbox.midtrans.com/snap/v1/transactions";
+
+        const snapResponse = await fetch(midtransUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Basic ${base64Key}`,
+          },
+          body: JSON.stringify({
+            transaction_details: {
+              order_id: result.id,
+              gross_amount: Math.round(result.grandTotal),
+            },
+            credit_card: {
+              secure: true,
+            },
+            customer_details: {
+              first_name: customerName,
+              email: customerEmail,
+              phone: customerPhone,
+            },
+          }),
+        });
+
+        if (snapResponse.ok) {
+          const snapData = await snapResponse.json();
+          paymentToken = snapData.token;
+          paymentUrl = snapData.redirect_url;
+          console.log("Successfully generated Midtrans Snap Token:", paymentToken);
+        } else {
+          const errText = await snapResponse.text();
+          console.error("Midtrans API returned error:", errText);
+        }
+      } catch (error) {
+        console.error("Failed to generate Midtrans Snap token, falling back to mock:", error);
+      }
+    } else {
+      console.log("MIDTRANS_SERVER_KEY not found. Operating in MOCK mode.");
+    }
+
+    // Update pesanan dengan URL pembayaran dan transactionId real/simulasi
     const updatedOrder = await prisma.order.update({
       where: { id: result.id },
       data: {
-        transactionId: mockTransactionId,
-        paymentUrl: mockPaymentUrl,
+        transactionId,
+        paymentUrl,
       },
     });
 
@@ -199,6 +247,7 @@ export async function createOrder(input: CreateOrderInput) {
     return {
       success: true,
       order: updatedOrder,
+      paymentToken,
       message: "Pesanan berhasil dibuat!",
     };
   } catch (error: any) {

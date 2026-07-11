@@ -21,6 +21,14 @@ enum PaymentStatus {
   EXPIRED
 }
 
+enum ShippingStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -160,6 +168,7 @@ model Order {
   shippingAddress String      @db.Text
   shippingMethod  String?     // JNE, J&T, Sicepat, etc.
   shippingCost    Float       @default(0)
+  shippingStatus  ShippingStatus @default(PENDING)
   trackingNumber  String?     // Resi pengiriman
   
   // Payment details

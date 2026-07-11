@@ -75,8 +75,12 @@ Kita akan membutuhkan beberapa model utama dengan optimasi level produksi (seper
    - Bagian *Related Products* (Produk Terkait).
 
 ### Fase 6: Alur Keranjang & Checkout
-1. **Shopping Cart (`app/cart/page.tsx`)**: Menampilkan ringkasan produk di keranjang (dari Zustand `localStorage`), field input voucher promosi, perhitungan ongkos kirim awal, dan total akhir.
-2. **Checkout (`app/checkout/page.tsx`)**: Form multi-step (atau single page) dengan validasi *React Hook Form + Zod* untuk Data Pembeli, Alamat Lengkap, Pemilihan Kurir, dan Metode Pembayaran, diakhiri dengan pembuatan `Order` di database.
+1. **Shopping Cart (`app/cart/page.tsx`)**: Menampilkan ringkasan produk di keranjang (dari Zustand `localStorage`), field input voucher promosi, dan penghitungan subtotal.
+2. **Checkout (`app/checkout/page.tsx`)**: Form (single page) dengan validasi *React Hook Form + Zod* untuk Data Pembeli dan Alamat Lengkap pengiriman.
+3. **Integrasi Eksternal & Database**:
+   - **RajaOngkir API**: Menghitung tarif ongkos kirim secara otomatis dan *real-time* ke seluruh kecamatan di Indonesia.
+   - **Midtrans (Snap)**: Menangani antarmuka dan proses metode pembayaran secara otomatis.
+   - Pembuatan record `Order` di database yang dilengkapi kolom untuk *tracking number* dan *shipping status*.
 
 ### Fase 7: Admin Dashboard
 1. Layout Admin khusus (`app/admin/layout.tsx`) dengan *Sidebar* navigasi.

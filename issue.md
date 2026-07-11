@@ -1,7 +1,7 @@
 # Issue: Fase 2 - Pengembangan Database & Backend Foundation (UrbanWear)
 
 ## Deskripsi
-Fokus pada fase ini adalah merancang skema database E-Commerce menggunakan Prisma ORM, melakukan migrasi ke PostgreSQL, membuat *seed data* (data dummy awal), serta membangun *Server Actions* atau *API Routes* dasar untuk mendukung fitur-fitur frontend (seperti katalog produk, autentikasi user, penanganan unggahan media, dan alur integrasi pembayaran otomatis).
+Fokus pada fase ini adalah merancang skema database E-Commerce *enterprise-grade* menggunakan Prisma ORM, melakukan migrasi ke PostgreSQL, membuat *seed data* awal, serta membangun *Server Actions* / *API Routes* untuk fungsionalitas inti (katalog, order, pembayaran, manajemen stok, dan auth).
 
 ## Spesifikasi Teknologi
 - Database: PostgreSQL
@@ -12,29 +12,28 @@ Fokus pada fase ini adalah merancang skema database E-Commerce menggunakan Prism
 - Bahasa: TypeScript
 
 ## Tugas (Tasks)
-- [ ] Rancang skema database di `prisma/schema.prisma` yang mencakup entitas berikut (dengan relasi dan index yang tepat):
-  - **User**: Pelanggan & Admin (tambahkan enum `Role` dan kolom penanda NextAuth adapter seperti `Account`, `Session`, dst).
-  - **Category**: Kategori pakaian (tambahkan index pada kolom nama/slug).
-  - **Product**: Data utama produk (Nama, Deskripsi, Harga Dasar, Status Aktif, tambahkan index pada slug).
+- [x] Rancang skema database di `prisma/schema.prisma` yang mencakup entitas berikut (dengan relasi, index, dan optimasi yang tepat):
+  - **User**: Pelanggan & Admin (tambahkan enum `Role` [ADMIN, CUSTOMER], kolom penanda NextAuth adapter, dan fitur *Soft Delete* `deletedAt`).
+  - **Category**: Kategori pakaian (tambahkan index pada slug).
+  - **Product**: Data utama produk (Nama, Deskripsi, Harga, Status Aktif, fitur *Soft Delete* `deletedAt`, dan index pada slug).
   - **ProductVariant**: Varian produk (Ukuran, Warna, Stok, SKU).
-  - **Order** & **OrderItem**: Transaksi pesanan (Total, Status Pembayaran, Metode Pembayaran [QRIS/VA], URL Pembayaran, Transaction ID, Webhook Log).
-  - **Review**: Ulasan dari pengguna terhadap produk.
-  - **Wishlist**: Produk yang disimpan oleh pengguna.
-- [ ] Jalankan migrasi database pertama (`npx prisma migrate dev`) ke instance PostgreSQL untuk menerapkan skema.
-- [ ] Buat *seed script* (`prisma/seed.ts`) yang mengisi tabel **Category** dan **Product** dengan data *dummy* awal katalog busana (minimal 10 produk dari beberapa kategori).
-- [ ] Buat *Server Actions* (misalnya di folder `app/actions/` atau `lib/actions/`) untuk fungsi-fungsi inti:
-  - Mengambil daftar kategori (`getCategories`).
-  - Mengambil daftar produk dengan filter/sortir/pencarian (`getProducts`).
-  - Mengambil detail produk beserta variannya (`getProductBySlug` atau `getProductById`).
-  - Membuat pesanan/order baru dan meminta Token/URL Pembayaran ke Payment Gateway (misal Midtrans/Xendit) (`createOrder`).
-  - Menghapus/mengubah cache data produk pada frontend (`revalidatePath` / `revalidateTag`) saat admin melakukan perubahan data produk.
-- [ ] Buat API Route (contoh: `app/api/payment/webhook/route.ts`) untuk menerima *callback/notification* otomatis dari Payment Gateway (untuk mengubah status Order menjadi `Paid` atau `Failed`).
-- [ ] Buat fungsi Server Action atau API Route untuk penanganan upload gambar produk (misal `/api/upload` atau integrasi Vercel Blob) untuk digunakan oleh admin dashboard nantinya.
+  - **Promo / Voucher**: Manajemen kode diskon (Kode, Persentase Diskon, Max Diskon, Kuota Penggunaan, Validitas Waktu).
+  - **Order** & **OrderItem**: Transaksi pesanan (Total, Status Pembayaran, Metode Pembayaran [QRIS/VA], URL Pembayaran, Transaction ID, Webhook Log, **Kurir Pengiriman**, **Ongkos Kirim**, dan **Nomor Resi/Tracking**).
+  - **Review** & **Wishlist**: Ulasan produk dan keranjang simpanan pengguna.
+- [x] Jalankan migrasi database pertama (`npx prisma migrate dev` / `npx prisma db push`) ke instance PostgreSQL.
+- [x] Buat *seed script* (`prisma/seed.ts`) yang mengisi tabel **Category**, **Product**, dan **Promo** dengan data *dummy* awal (minimal 10 produk).
+- [x] Buat *Server Actions* (misalnya di folder `app/actions/`) untuk fungsi inti:
+  - `getCategories` & `getProducts` (beserta filter/pencarian dan pagination).
+  - `getProductBySlug` untuk halaman detail produk.
+  - `createOrder`: Membuat pesanan baru, memvalidasi kuota/diskon *Voucher*, dan meminta URL Pembayaran ke Payment Gateway.
+  - **Stok**: Implementasikan pengurangan stok menggunakan **Prisma Atomic Updates** (`decrement`) atau *Transactions* saat status pembayaran sukses, untuk mencegah *race conditions / overselling*.
+  - `revalidatePath` / `revalidateTag`: Menghapus cache frontend saat Admin melakukan CRUD produk.
+- [x] Buat API Route (`app/api/payment/webhook/route.ts`) untuk menerima *callback* otomatis dari Payment Gateway dan memicu pengurangan stok yang aman.
+- [x] Buat fungsi Server Action / API untuk *image upload* produk (misal integrasi Vercel Blob / S3).
 
 ## Kriteria Penerimaan (Acceptance Criteria)
-- Skema Prisma bebas dari error validasi, dan relasi antar tabel (seperti `Product` ke `Category` atau `Order` ke `User`) terhubung dengan benar.
-- Kolom pencarian kritis (seperti `slug` produk) terindeks (`@@index` atau `@unique`) di tingkat database.
-- *Database* PostgreSQL berhasil terhubung dan tabel-tabel tercipta setelah perintah migrasi.
-- *Seed script* dapat dijalankan dengan `npx prisma db seed` dan berhasil mengisi database tanpa *error*.
-- Fungsi *Server Actions* dasar (*Read* produk/kategori) sudah dapat dipanggil dan mengembalikan data dengan tipe (TypeScript interface) yang jelas sesuai skema Prisma.
-- Struktur *codebase* tetap rapi dan siap digunakan oleh Frontend Developer di Fase 3.
+- Skema Prisma bebas error, memiliki relasi tabel yang benar, fitur *Soft Delete*, dan menggunakan *index* untuk kolom pencarian/filter.
+- Migrasi database berhasil dan *seed script* dapat dijalankan tanpa kendala (`npx prisma db seed`).
+- Backend logic untuk konfirmasi pembayaran menggunakan *Atomic Updates* / *Database Transaction* untuk mencegah bentrok stok barang (stok tidak boleh minus).
+- *Server Actions* dasar dapat dipanggil dengan tipe data (TypeScript) yang jelas (fully typed).
+- Kerangka backend kokoh dan aman (mencegah terhapusnya riwayat pesanan jika produk di-soft-delete).

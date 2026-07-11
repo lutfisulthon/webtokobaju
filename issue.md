@@ -15,7 +15,8 @@ Fokus pada fase ini adalah merancang skema database E-Commerce menggunakan Prism
   - **Category**: Kategori pakaian (misal: Kaos, Kemeja)
   - **Product**: Data utama produk (Nama, Deskripsi, Harga Dasar, Status Aktif)
   - **ProductVariant**: Varian produk (Ukuran, Warna, Stok, SKU)
-  - **Order** & **OrderItem**: Transaksi pesanan (Status Pembayaran, Alamat, Total)
+  - **Order** & **OrderItem**: Transaksi pesanan (Total, Status Pembayaran, Metode Pembayaran [QRIS/VA], URL Pembayaran, Transaction ID)
+  - **PaymentWebhook**: Opsi tabel untuk melacak log status webhoook/callback dari Payment Gateway.
   - **Review**: Ulasan dari pengguna terhadap produk
   - **Wishlist**: Produk yang disimpan oleh pengguna
 - [ ] Jalankan migrasi database pertama (`npx prisma migrate dev`) ke instance PostgreSQL untuk menerapkan skema.
@@ -24,7 +25,8 @@ Fokus pada fase ini adalah merancang skema database E-Commerce menggunakan Prism
   - Mengambil daftar kategori (`getCategories`).
   - Mengambil daftar produk dengan filter/sortir dasar (`getProducts`).
   - Mengambil detail produk beserta variannya (`getProductBySlug` atau `getProductById`).
-  - Membuat *draft* pesanan/order baru (`createOrder`).
+  - Membuat pesanan/order baru dan meminta Token/URL Pembayaran ke Payment Gateway (misal Midtrans/Xendit) (`createOrder`).
+- [ ] Buat API Route (contoh: `app/api/payment/webhook/route.ts`) untuk menerima *callback/notification* otomatis dari Payment Gateway (untuk mengubah status Order menjadi `Paid` atau `Failed`).
 
 ## Kriteria Penerimaan (Acceptance Criteria)
 - `prisma/schema.prisma` bebas dari error validasi dan relasi antar tabel (seperti `Product` ke `Category` atau `Order` ke `User`) terhubung dengan benar.

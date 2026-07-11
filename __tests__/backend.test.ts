@@ -3,7 +3,6 @@ import { getCategories, getProducts, getProductBySlug } from "@/lib/actions/prod
 import { validateVoucher, createOrder } from "@/lib/actions/orders";
 import { prisma, pool } from "@/lib/db";
 import { POST as handlePaymentWebhook } from "@/app/api/payment/webhook/route";
-import { PaymentStatus } from "@prisma/client";
 
 describe("UrbanWear E-Commerce Backend - Unit & Integration Tests", () => {
   let testVariantId: string;
@@ -94,7 +93,7 @@ describe("UrbanWear E-Commerce Backend - Unit & Integration Tests", () => {
 
       expect(response.success).toBe(true);
       expect(response.order).toHaveProperty("id");
-      expect(response.order?.paymentStatus).toBe(PaymentStatus.PENDING);
+      expect(response.order?.paymentStatus).toBe("PENDING");
       expect(response.order?.transactionId).toBeDefined();
 
       // Cek apakah stok fisik benar-benar berkurang di database secara aman
@@ -147,7 +146,7 @@ describe("UrbanWear E-Commerce Backend - Unit & Integration Tests", () => {
       });
 
       const order = orderResponse.order!;
-      expect(order.paymentStatus).toBe(PaymentStatus.PENDING);
+      expect(order.paymentStatus).toBe("PENDING");
 
       // Simulasi request webhook pembayaran sukses
       const webhookRequest = new Request("http://localhost:3000/api/payment/webhook", {
@@ -170,7 +169,7 @@ describe("UrbanWear E-Commerce Backend - Unit & Integration Tests", () => {
       const updatedOrder = await prisma.order.findUnique({
         where: { id: order.id },
       });
-      expect(updatedOrder?.paymentStatus).toBe(PaymentStatus.PAID);
+      expect(updatedOrder?.paymentStatus).toBe("PAID");
     });
 
     it("should process FAILED webhook, mark order FAILED, and rollback/increment stock", async () => {
@@ -220,7 +219,7 @@ describe("UrbanWear E-Commerce Backend - Unit & Integration Tests", () => {
       const updatedOrder = await prisma.order.findUnique({
         where: { id: order.id },
       });
-      expect(updatedOrder?.paymentStatus).toBe(PaymentStatus.FAILED);
+      expect(updatedOrder?.paymentStatus).toBe("FAILED");
 
       // 2. Pastikan stok fisik otomatis kembali bertambah 3 (kembali ke kondisi sebelum order)
       const variantAfterRollback = await prisma.productVariant.findUnique({

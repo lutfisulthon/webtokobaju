@@ -102,7 +102,7 @@ async function main() {
 
   console.log("Promo/Voucher berhasil dibuat.");
 
-  // 5. Buat Produk & Varian (10 Produk Premium)
+  // 5. Buat Produk & Varian (12 Produk Premium)
   const productsData = [
     // --- Kemeja ---
     {
@@ -116,15 +116,16 @@ async function main() {
         "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80",
         "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80"
       ],
+      gender: "pria",
       categoryId: kemejaCat.id,
       variants: [
-        { sku: "KMJ-LN-OW-S", size: "S", color: "Putih", stock: 15 },
-        { sku: "KMJ-LN-OW-M", size: "M", color: "Putih", stock: 25 },
-        { sku: "KMJ-LN-OW-L", size: "L", color: "Putih", stock: 20 },
-        { sku: "KMJ-LN-OW-XL", size: "XL", color: "Putih", stock: 10 },
-        { sku: "KMJ-LN-OB-S", size: "S", color: "Beige", stock: 12 },
-        { sku: "KMJ-LN-OB-M", size: "M", color: "Beige", stock: 18 },
-        { sku: "KMJ-LN-OB-L", size: "L", color: "Beige", stock: 15 },
+        { sku: "KMJ-LN-OW-S", size: "S", color: "Putih", imageUrl: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80", stock: 15 },
+        { sku: "KMJ-LN-OW-M", size: "M", color: "Putih", imageUrl: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80", stock: 25 },
+        { sku: "KMJ-LN-OW-L", size: "L", color: "Putih", imageUrl: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80", stock: 20 },
+        { sku: "KMJ-LN-OW-XL", size: "XL", color: "Putih", imageUrl: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80", stock: 10 },
+        { sku: "KMJ-LN-OB-S", size: "S", color: "Beige", imageUrl: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80", stock: 12 },
+        { sku: "KMJ-LN-OB-M", size: "M", color: "Beige", imageUrl: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80", stock: 18 },
+        { sku: "KMJ-LN-OB-L", size: "L", color: "Beige", imageUrl: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80", stock: 15 },
       ]
     },
     {
@@ -135,12 +136,13 @@ async function main() {
       discountPrice: null,
       image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80",
       images: ["https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80"],
+      gender: "pria",
       categoryId: kemejaCat.id,
       variants: [
-        { sku: "KMJ-OX-SF-S", size: "S", color: "Biru Muda", stock: 20 },
-        { sku: "KMJ-OX-SF-M", size: "M", color: "Biru Muda", stock: 30 },
-        { sku: "KMJ-OX-SF-L", size: "L", color: "Biru Muda", stock: 25 },
-        { sku: "KMJ-OX-SF-XL", size: "XL", color: "Biru Muda", stock: 15 },
+        { sku: "KMJ-OX-SF-S", size: "S", color: "Biru Muda", imageUrl: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80", stock: 20 },
+        { sku: "KMJ-OX-SF-M", size: "M", color: "Biru Muda", imageUrl: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80", stock: 30 },
+        { sku: "KMJ-OX-SF-L", size: "L", color: "Biru Muda", imageUrl: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80", stock: 25 },
+        { sku: "KMJ-OX-SF-XL", size: "XL", color: "Biru Muda", imageUrl: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80", stock: 15 },
       ]
     },
     {
@@ -151,12 +153,13 @@ async function main() {
       discountPrice: 249000,
       image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?w=800&auto=format&fit=crop&q=80",
       images: [],
+      gender: "pria",
       categoryId: kemejaCat.id,
       variants: [
-        { sku: "KMJ-FL-RD-M", size: "M", color: "Merah-Hitam", stock: 14 },
-        { sku: "KMJ-FL-RD-L", size: "L", color: "Merah-Hitam", stock: 18 },
-        { sku: "KMJ-FL-GR-M", size: "M", color: "Hijau-Navy", stock: 12 },
-        { sku: "KMJ-FL-GR-L", size: "L", color: "Hijau-Navy", stock: 15 },
+        { sku: "KMJ-FL-RD-M", size: "M", color: "Merah-Hitam", imageUrl: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?w=800&auto=format&fit=crop&q=80", stock: 14 },
+        { sku: "KMJ-FL-RD-L", size: "L", color: "Merah-Hitam", imageUrl: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?w=800&auto=format&fit=crop&q=80", stock: 18 },
+        { sku: "KMJ-FL-GR-M", size: "M", color: "Hijau-Navy", imageUrl: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80", stock: 12 },
+        { sku: "KMJ-FL-GR-L", size: "L", color: "Hijau-Navy", imageUrl: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80", stock: 15 },
       ]
     },
 
@@ -171,6 +174,7 @@ async function main() {
       images: [
         "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
       ],
+      gender: "pria",
       categoryId: kaosCat.id,
       variants: [
         { sku: "KOS-OG-BK-S", size: "S", color: "Hitam", stock: 40 },
@@ -189,6 +193,7 @@ async function main() {
       discountPrice: 159000,
       image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80",
       images: [],
+      gender: "pria",
       categoryId: kaosCat.id,
       variants: [
         { sku: "KOS-SW-GF-M", size: "M", color: "Charcoal", stock: 20 },
@@ -206,6 +211,7 @@ async function main() {
       discountPrice: 179000,
       image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80",
       images: [],
+      gender: "wanita",
       categoryId: celanaCat.id,
       variants: [
         { sku: "CLN-KL-LN-S", size: "S", color: "Sand", stock: 15 },
@@ -223,6 +229,7 @@ async function main() {
       discountPrice: null,
       image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80",
       images: [],
+      gender: "pria",
       categoryId: celanaCat.id,
       variants: [
         { sku: "CLN-CN-SF-28", size: "28", color: "Khaki", stock: 10 },
@@ -243,6 +250,7 @@ async function main() {
       images: [
         "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80"
       ],
+      gender: "unisex",
       categoryId: jaketCat.id,
       variants: [
         { sku: "JKT-DN-OW-M", size: "M", color: "Light Blue", stock: 8 },
@@ -258,6 +266,7 @@ async function main() {
       discountPrice: 229000,
       image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80",
       images: [],
+      gender: "pria",
       categoryId: jaketCat.id,
       variants: [
         { sku: "JKT-CB-MN-S", size: "S", color: "Hitam", stock: 10 },
@@ -273,10 +282,43 @@ async function main() {
       discountPrice: null,
       image: "https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?w=800&auto=format&fit=crop&q=80",
       images: [],
+      gender: "wanita",
       categoryId: jaketCat.id,
       variants: [
         { sku: "JKT-CD-RJ-M", size: "M", color: "Brown", stock: 12 },
         { sku: "JKT-CD-RJ-L", size: "L", color: "Brown", stock: 15 },
+      ]
+    },
+    
+    // --- Anak-anak ---
+    {
+      name: "Kaos Anak Katun Dino Ceria",
+      slug: "kaos-anak-katun-dino-ceria",
+      description: "Kaos anak bermotif dinosaurus yang lucu dengan bahan 100% katun premium yang lembut, sejuk, dan aman untuk kulit sensitif anak.",
+      price: 99000,
+      discountPrice: 79000,
+      image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=800&auto=format&fit=crop&q=80",
+      images: [],
+      gender: "anak-anak",
+      categoryId: kaosCat.id,
+      variants: [
+        { sku: "KOS-ANK-DN-4", size: "4 Tahun", color: "Hijau", stock: 15 },
+        { sku: "KOS-ANK-DN-6", size: "6 Tahun", color: "Hijau", stock: 20 },
+      ]
+    },
+    {
+      name: "Jaket Hoodie Anak Fleece Lembut",
+      slug: "jaket-hoodie-anak-fleece-lembut",
+      description: "Jaket hoodie anak dengan bahan fleece tebal namun sangat lembut dan hangat. Sangat nyaman untuk bermain maupun bepergian.",
+      price: 179000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&auto=format&fit=crop&q=80",
+      images: [],
+      gender: "anak-anak",
+      categoryId: jaketCat.id,
+      variants: [
+        { sku: "JKT-ANK-HD-S", size: "S (8-10 Thn)", color: "Navy", stock: 10 },
+        { sku: "JKT-ANK-HD-M", size: "M (11-13 Thn)", color: "Navy", stock: 12 },
       ]
     }
   ];

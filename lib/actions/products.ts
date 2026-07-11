@@ -46,9 +46,17 @@ export async function getProducts(options: ProductFilterOptions = {}) {
   };
 
   if (categorySlug) {
-    where.category = {
-      slug: categorySlug,
-    };
+    const slugLower = categorySlug.toLowerCase();
+    if (["pria", "wanita", "anak-anak"].includes(slugLower)) {
+      where.OR = [
+        { gender: slugLower },
+        { gender: "unisex" }
+      ];
+    } else {
+      where.category = {
+        slug: categorySlug,
+      };
+    }
   }
 
   if (minPrice !== undefined || maxPrice !== undefined) {
@@ -110,11 +118,9 @@ export async function getProducts(options: ProductFilterOptions = {}) {
 // 3. Mengambil produk berdasarkan Slug (Detail Produk)
 export async function getProductBySlug(slug: string) {
   try {
-    const product = await prisma.product.findFirst({
+    const product = await prisma.product.findUnique({
       where: {
         slug,
-        isActive: true,
-        deletedAt: null,
       },
       include: {
         category: true,
@@ -131,6 +137,10 @@ export async function getProductBySlug(slug: string) {
         },
       },
     });
+
+    if (!product || !product.isActive || product.deletedAt !== null) {
+      return null;
+    }
 
     return product;
   } catch (error) {

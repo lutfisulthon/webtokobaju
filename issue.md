@@ -12,14 +12,14 @@ Lakukan inisialisasi awal proyek Next.js dan konfigurasi *dependencies* utama un
 - State Management: Zustand
 
 ## Tugas (Tasks)
-- [ ] Inisialisasi proyek Next.js baru dengan mengaktifkan App Router, TypeScript, ESLint, dan Tailwind CSS.
-- [ ] Konfigurasikan tema Tailwind (`tailwind.config.ts` atau ekivalennya) sesuai panduan desain:
+- [x] Inisialisasi proyek Next.js baru dengan mengaktifkan App Router, TypeScript, ESLint, dan Tailwind CSS.
+- [x] Konfigurasikan tema Tailwind (`tailwind.config.ts` atau ekivalennya) sesuai panduan desain:
   - Warna utama: Putih (`#FFFFFF`), Hitam (`#111111`), Abu muda (`#F5F5F5`).
   - Warna aksen: Orange (`#FF6B35`) atau Emerald (`#10B981`).
   - Tipografi modern (Inter, Poppins, atau Manrope).
-- [ ] Instal dan inisialisasi Prisma ORM, serta siapkan koneksi awal ke PostgreSQL (melalui `.env`).
-- [ ] Setup Shadcn UI dan instal komponen-komponen antarmuka dasar (contoh: Button, Card, Input, Dialog, Toast, Skeleton).
-- [ ] Setup arsitektur Zustand untuk manajemen *state global* dasar (siapkan *store* awal untuk Cart dan Wishlist).
+- [x] Instal dan inisialisasi Prisma ORM, serta siapkan koneksi awal ke PostgreSQL (melalui `.env`).
+- [x] Setup Shadcn UI dan instal komponen-komponen antarmuka dasar (contoh: Button, Card, Input, Dialog, Toast, Skeleton).
+- [x] Setup arsitektur Zustand untuk manajemen *state global* dasar (siapkan *store* awal untuk Cart dan Wishlist).
 
 ## Kriteria Penerimaan (Acceptance Criteria)
 - Proyek berhasil berjalan secara lokal (`npm run dev` / `yarn dev`) tanpa *error*.

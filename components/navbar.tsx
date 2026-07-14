@@ -131,9 +131,9 @@ export function Navbar() {
             <div className="absolute top-16 left-0 w-full bg-background border-b border-border shadow-lg opacity-0 translate-y-2 pointer-events-none group-hover/mega:opacity-100 group-hover/mega:translate-y-0 group-hover/mega:pointer-events-auto transition-all duration-300 z-50">
               <div className="container mx-auto px-6 py-8 grid grid-cols-4 gap-8">
                 <div>
-                  <h4 className="font-bold text-sm text-foreground mb-3 pb-1 border-b">Pakaian Atas</h4>
+                  <h4 className="font-bold text-[11px] tracking-widest text-foreground/80 mb-3 pb-1 border-b uppercase">Top Wear</h4>
                   <ul className="space-y-2">
-                    {["Kaos", "Polo", "Kemeja", "Hoodie", "Jaket", "Sweater"].map((item) => (
+                    {["T-Shirts", "Polo Shirts", "Shirts", "Hoodies", "Jackets", "Sweaters", "Tank Tops", "Outerwear"].map((item) => (
                       <li key={item}>
                         <Link href={`/shop?category=pria&search=${item}`} className="text-xs text-muted-foreground hover:text-[#FF6B35] transition-colors">
                           {item}
@@ -143,9 +143,9 @@ export function Navbar() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-foreground mb-3 pb-1 border-b">Pakaian Bawah</h4>
+                  <h4 className="font-bold text-[11px] tracking-widest text-foreground/80 mb-3 pb-1 border-b uppercase">Bottom Wear</h4>
                   <ul className="space-y-2">
-                    {["Celana Jeans", "Celana Chino", "Celana Pendek", "Jogger"].map((item) => (
+                    {["Jeans", "Chinos", "Jogger Pants", "Cargo Pants", "Shorts", "Training Pants", "Formal Pants"].map((item) => (
                       <li key={item}>
                         <Link href={`/shop?category=pria&search=${item}`} className="text-xs text-muted-foreground hover:text-[#FF6B35] transition-colors">
                           {item}
@@ -155,9 +155,9 @@ export function Navbar() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-foreground mb-3 pb-1 border-b">Aksesori & Sepatu</h4>
+                  <h4 className="font-bold text-[11px] tracking-widest text-foreground/80 mb-3 pb-1 border-b uppercase">Accessories</h4>
                   <ul className="space-y-2">
-                    {["Topi", "Sepatu", "Sandal", "Tas", "Dompet", "Ikat Pinggang", "Jam Tangan"].map((item) => (
+                    {["Caps", "Bags", "Shoes", "Sandals", "Watches", "Wallets", "Belts", "Sunglasses", "Socks"].map((item) => (
                       <li key={item}>
                         <Link href={`/shop?category=pria&search=${item}`} className="text-xs text-muted-foreground hover:text-[#FF6B35] transition-colors">
                           {item}
@@ -168,17 +168,17 @@ export function Navbar() {
                 </div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] bg-muted group/banner">
                   <Image
-                    src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=500&auto=format&fit=crop&q=80"
-                    alt="Koleksi Pria"
+                    src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=80"
+                    alt="Pria Model Banner"
                     fill
                     className="object-cover transition-transform duration-500 group-hover/banner:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent flex flex-col justify-end p-4 text-white">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#FF6B35]">Koleksi Pria</span>
-                    <h5 className="font-bold text-sm mb-1">Gaya Kasual Modern</h5>
-                    <p className="text-[10px] text-zinc-300 mb-2">Gunakan voucher <strong>URBANNEW</strong> diskon 10%</p>
-                    <Link href="/shop?category=pria" className="text-[11px] font-bold underline hover:text-[#FF6B35] transition-colors">
-                      Belanja Sekarang
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#FF6B35]">New Collection</span>
+                    <h5 className="font-bold text-sm mb-1">Elevate Your Style</h5>
+                    <p className="text-[10px] text-zinc-300 mb-2">Premium clothing for everyday confidence</p>
+                    <Link href="/shop?category=pria" className="inline-block self-start text-[11px] font-bold bg-black hover:bg-zinc-900 text-white px-4 py-1.5 rounded transition-colors uppercase tracking-wider">
+                      Shop Now
                     </Link>
                   </div>
                 </div>

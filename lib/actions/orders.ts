@@ -258,3 +258,85 @@ export async function createOrder(input: CreateOrderInput) {
     };
   }
 }
+
+export async function getUserOrders(email?: string) {
+  let userEmail = email || "";
+  if (!userEmail) {
+    const { auth } = await import("@/lib/auth");
+    const session = await auth();
+    userEmail = session?.user?.email || "";
+  }
+
+  if (!userEmail) return [];
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: { email: userEmail },
+      select: { id: true }
+    });
+
+    if (!user) return [];
+
+    const orders = await prisma.order.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: "desc" },
+      include: {
+        items: {
+          include: {
+            variant: {
+              include: {
+                product: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return orders;
+  } catch (error) {
+    console.error("Gagal mengambil pesanan user:", error);
+    return [];
+  }
+}
+
+export async function getUserOrderStats(email?: string) {
+  let userEmail = email || "";
+  if (!userEmail) {
+    const { auth } = await import("@/lib/auth");
+    const session = await auth();
+    userEmail = session?.user?.email || "";
+  }
+
+  const defaultStats = { total: 0, processing: 0, completed: 0, reviews: 0 };
+  if (!userEmail) return defaultStats;
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: { email: userEmail },
+      select: { id: true }
+    });
+
+    if (!user) return defaultStats;
+
+    const total = await prisma.order.count({ where: { userId: user.id } });
+    const processing = await prisma.order.count({
+      where: {
+        userId: user.id,
+        shippingStatus: { in: ["PENDING", "PROCESSING", "SHIPPED"] }
+      }
+    });
+    const completed = await prisma.order.count({
+      where: {
+        userId: user.id,
+        shippingStatus: "DELIVERED"
+      }
+    });
+    const reviews = await prisma.review.count({ where: { userId: user.id } });
+
+    return { total, processing, completed, reviews };
+  } catch (error) {
+    console.error("Gagal mengambil statistik order:", error);
+    return defaultStats;
+  }
+}

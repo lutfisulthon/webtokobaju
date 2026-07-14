@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await params
-  
+
   // Fetch details
   const product = await getProductBySlug(slug).catch(() => null)
   if (!product) {
@@ -62,29 +62,44 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     .slice(0, 4) // Show up to 4 related products
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-8 space-y-16">
-      {/* 1. Main Client Details Component */}
-      <ProductDetailsClient product={product as any} />
+    <div className="min-h-screen">
+      {/* Product Detail Section */}
+      <section className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        <ProductDetailsClient product={product as any} />
+      </section>
 
-      {/* 2. Related Products Section */}
+      {/* Related Products Section */}
       {relatedProducts.length > 0 && (
-        <section className="border-t pt-12">
-          <div className="space-y-2 mb-8">
-            <h2 className="font-plus-jakarta font-extrabold text-xl md:text-2xl tracking-tight">
-              Produk Terkait
-            </h2>
-            <p className="text-xs text-muted-foreground font-semibold">
-              Lihat pilihan busana menarik lainnya dari koleksi {product.category.name}.
-            </p>
-          </div>
+        <section className="border-t bg-muted/20 py-12 md:py-16">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="flex items-end justify-between gap-4 mb-8">
+              <div className="space-y-1.5">
+                <p className="text-[11px] font-extrabold uppercase tracking-widest text-[#FF6B35]">
+                  Koleksi Terkait
+                </p>
+                <h2 className="font-plus-jakarta font-extrabold text-xl md:text-2xl tracking-tight">
+                  Produk Serupa yang Mungkin Anda Suka
+                </h2>
+              </div>
+              <a
+                href={`/shop?category=${product.category.slug}`}
+                className="text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors shrink-0 pb-0.5"
+              >
+                Lihat Semua →
+              </a>
+            </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {relatedProducts.map((p: any) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {relatedProducts.map((p: any) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
           </div>
         </section>
       )}
+
+      {/* Bottom padding for mobile sticky CTA */}
+      <div className="md:hidden h-24" />
     </div>
   )
 }

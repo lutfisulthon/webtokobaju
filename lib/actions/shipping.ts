@@ -227,3 +227,23 @@ export async function getShippingCost(
     ];
   }
 }
+
+function toTitleCase(str: string): string {
+  return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+import { DISTRICTS } from "@/lib/indonesia-regions";
+
+export async function getDistricts(cityId: string): Promise<string[]> {
+  try {
+    const res = await fetch(`https://emsifa.github.io/api-wilayah-indonesia/api/districts/${cityId}.json`, {
+      next: { revalidate: 86400 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch districts API");
+    const data = await res.json();
+    return data.map((item: any) => toTitleCase(item.name));
+  } catch (error) {
+    console.warn(`Using local fallback for districts in city ${cityId}:`, error);
+    return DISTRICTS[cityId] || [];
+  }
+}

@@ -24,6 +24,7 @@ export interface ProductCardProps {
       name: string
       slug: string
     }
+    gender?: string
     variants: Array<{
       id: string
       sku: string
@@ -180,9 +181,19 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex flex-col flex-1 p-4 gap-2">
           {/* Category + Rating Row */}
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FF6B35]">
-              {product.category.name}
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#FF6B35]">
+                {product.category.name}
+              </span>
+              {product.gender && (
+                <>
+                  <span className="text-[10px] text-[#CCC]">•</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#888]">
+                    {product.gender.toLowerCase().includes("anak") ? "ANAK" : product.gender}
+                  </span>
+                </>
+              )}
+            </div>
             <div className="flex items-center gap-1">
               <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
               <span className="text-[11px] font-bold text-[#1A1A1A]">{rating}</span>

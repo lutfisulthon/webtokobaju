@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   RefreshCw,
   ChevronRight,
+  ChevronLeft,
   Home,
   Minus,
   Plus,
@@ -50,10 +51,33 @@ interface ProductDetailsClientProps {
       name: string
       slug: string
     }
+    gender?: string
     variants: ProductVariant[]
     rating?: number
     reviewCount?: number
   }
+}
+
+const COLOR_HEX: Record<string, string> = {
+  Hitam: "#1A1A1A",
+  Putih: "#FFFFFF",
+  Abu: "#9E9E9E",
+  Navy: "#1B2A4A",
+  Coklat: "#795548",
+  Hijau: "#4A6741",
+  Merah: "#C0392B",
+  Pink: "#F8BBD0",
+  Cream: "#F5F0E8",
+  Olive: "#6B6B47",
+  Beige: "#E8DDD0",
+  Charcoal: "#4A4A4A",
+  Sand: "#C8B89A",
+  Khaki: "#C3B091",
+  "Biru Muda": "#90CAF9",
+  "Light Blue": "#B3D9F0",
+  "Merah-Hitam": "#7B1A1A",
+  "Hijau-Navy": "#1A3D2B",
+  Brown: "#795548",
 }
 
 // --- Star Rating Component ---
@@ -301,45 +325,18 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
 
         {/* ========== Left Column: Sticky Image Gallery ========== */}
         <div className="lg:col-span-7">
-          <div className="lg:sticky lg:top-24 space-y-3">
-            {/* Main Image */}
-            <div
-              className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 cursor-zoom-in group border border-border/50"
-              onClick={() => setZoomOpen(true)}
-            >
-              <Image
-                src={activeImage}
-                alt={product.name}
-                fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                priority
-              />
-
-              {/* Discount badge overlay */}
-              {product.discountPrice && (
-                <div className="absolute top-4 left-4 bg-[#FF6B35] text-white text-xs font-extrabold px-2.5 py-1 rounded-full shadow-lg tracking-wide">
-                  -{discountPct}% OFF
-                </div>
-              )}
-
-              {/* Zoom icon */}
-              <div className="absolute bottom-4 right-4 bg-black/40 backdrop-blur-sm text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <ZoomIn className="h-4 w-4" />
-              </div>
-            </div>
-
-            {/* Thumbnails */}
+          <div className="lg:sticky lg:top-24 flex gap-4 items-start">
+            {/* Vertical Thumbnails */}
             {allImages.length > 1 && (
-              <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-hide">
+              <div className="hidden md:flex flex-col gap-3 shrink-0 overflow-y-auto max-h-[520px] pr-1">
                 {allImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveImage(img)}
                     className={cn(
-                      "relative aspect-square w-[72px] rounded-xl overflow-hidden border-2 shrink-0 bg-muted transition-all duration-200",
+                      "relative aspect-[3/4] w-20 rounded-xl overflow-hidden border-2 shrink-0 bg-muted transition-all duration-200",
                       activeImage === img
-                        ? "border-[#FF6B35] ring-2 ring-[#FF6B35]/20"
+                        ? "border-[#FF6B35] ring-2 ring-[#FF6B35]/20 shadow-sm"
                         : "border-transparent hover:border-border"
                     )}
                     aria-label={`Lihat gambar ${idx + 1}`}
@@ -349,6 +346,66 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                 ))}
               </div>
             )}
+
+            {/* Main Image Container */}
+            <div className="relative flex-1 aspect-[3/4] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 group border border-border/50">
+              <Image
+                src={activeImage}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                priority
+              />
+
+              {/* Prev/Next Navigation Overlays */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  const currentIndex = allImages.indexOf(activeImage)
+                  const prevIndex = (currentIndex - 1 + allImages.length) % allImages.length
+                  setActiveImage(allImages[prevIndex])
+                }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-foreground flex items-center justify-center shadow-md transition-all opacity-0 group-hover:opacity-100"
+                aria-label="Gambar sebelumnya"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  const currentIndex = allImages.indexOf(activeImage)
+                  const nextIndex = (currentIndex + 1) % allImages.length
+                  setActiveImage(allImages[nextIndex])
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-foreground flex items-center justify-center shadow-md transition-all opacity-0 group-hover:opacity-100"
+                aria-label="Gambar berikutnya"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+
+              {/* Badges */}
+              <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
+                <span className="px-2.5 py-1 bg-[#1A1A1A] text-white text-[10px] font-extrabold rounded-full uppercase tracking-wider">
+                  BEST SELLER
+                </span>
+                <span className="px-2.5 py-1 bg-[#FF6B35] text-white text-[10px] font-extrabold rounded-full uppercase tracking-wider shadow-md">
+                  NEW
+                </span>
+              </div>
+
+              {/* Zoom trigger ("Perbesar") */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setZoomOpen(true)
+                }}
+                className="absolute bottom-4 right-4 bg-white hover:bg-muted text-foreground font-semibold text-xs py-2 px-3.5 rounded-xl shadow-md flex items-center gap-1.5 transition-all"
+              >
+                <ZoomIn className="h-3.5 w-3.5" />
+                Perbesar
+              </button>
+            </div>
           </div>
         </div>
 
@@ -358,12 +415,11 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
           {/* Header: Category + Actions */}
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-2 flex-1 min-w-0">
-              <Link
-                href={`/shop?category=${product.category.slug}`}
-                className="inline-block text-[11px] font-extrabold uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors"
-              >
-                {product.category.name}
-              </Link>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#FF6B35]">
+                  {product.gender ? `${product.gender.toUpperCase()} • ` : ""}{product.category.name.toUpperCase()}
+                </span>
+              </div>
               <h1 className="font-plus-jakarta font-extrabold text-2xl md:text-3xl tracking-tight leading-[1.15] text-foreground">
                 {product.name}
               </h1>
@@ -393,7 +449,11 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
           </div>
 
           {/* Rating */}
-          <StarRating rating={rating} count={reviewCount} />
+          <div className="flex items-center gap-3">
+            <StarRating rating={rating} count={reviewCount} />
+            <span className="text-muted-foreground text-xs font-semibold">|</span>
+            <span className="text-xs font-bold text-foreground">512 Terjual</span>
+          </div>
 
           {/* Divider */}
           <div className="h-px bg-border" />
@@ -407,7 +467,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                     Rp {product.discountPrice.toLocaleString("id-ID")}
                   </span>
                   <span className="px-2 py-0.5 bg-[#FF6B35]/10 text-[#FF6B35] text-[10px] font-extrabold rounded-full border border-[#FF6B35]/20">
-                    HEMAT {discountPct}%
+                    - {discountPct}%
                   </span>
                 </div>
                 <span className="text-sm text-muted-foreground line-through">
@@ -421,32 +481,58 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
             )}
           </div>
 
-          {/* Divider */}
-          <div className="h-px bg-border" />
+          {/* Premium Shield Trust Badge */}
+          <div className="bg-emerald-50/50 border border-emerald-100 dark:bg-emerald-950/20 dark:border-emerald-900/30 rounded-2xl p-4 flex gap-3 items-start">
+            <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-500 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-xs font-bold text-emerald-800 dark:text-emerald-400">Garansi Ori UrbanWear</p>
+              <p className="text-[11px] text-emerald-600 dark:text-emerald-500/80 leading-relaxed mt-0.5">
+                Semua produk merupakan produk asli dengan kualitas terbaik. Jika terbukti tidak original, kami memberikan garansi pengembalian dana sesuai kebijakan UrbanWear.
+              </p>
+            </div>
+          </div>
 
           {/* Color Selector */}
           {colors.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">
-                  Warna: <span className="text-foreground capitalize">{selectedColor}</span>
+                  PILIH WARNA: <span className="text-foreground capitalize">{selectedColor}</span>
                 </span>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {colors.map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => setSelectedColor(color)}
-                    className={cn(
-                      "text-xs px-4 py-2 border rounded-full font-semibold transition-all duration-200 hover:border-foreground/50",
-                      selectedColor === color
-                        ? "border-[#FF6B35] bg-[#FF6B35] text-white shadow-sm shadow-[#FF6B35]/30"
-                        : "border-border text-muted-foreground bg-card hover:bg-muted"
-                    )}
-                  >
-                    {color}
-                  </button>
-                ))}
+              <div className="flex flex-wrap gap-3">
+                {colors.map((color) => {
+                  const hex = COLOR_HEX[color] ?? "#ccc";
+                  const isSelected = selectedColor === color;
+                  const isWhite = color.toLowerCase() === "putih" || color.toLowerCase() === "cream";
+                  return (
+                    <button
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      className={cn(
+                        "w-8 h-8 rounded-full border-2 transition-all duration-200 flex items-center justify-center relative",
+                        isSelected
+                          ? "border-[#FF6B35] scale-110 shadow-sm"
+                          : "border-border hover:border-foreground/40"
+                      )}
+                      title={color}
+                      aria-label={`Warna ${color}`}
+                    >
+                      <span
+                        className="w-6 h-6 rounded-full"
+                        style={{ backgroundColor: hex }}
+                      />
+                      {isSelected && (
+                        <span className={cn(
+                          "absolute inset-0 flex items-center justify-center text-[10px] font-extrabold",
+                          isWhite ? "text-black" : "text-white"
+                        )}>
+                          ✓
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -456,7 +542,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">
-                  Ukuran: <span className="text-foreground">{selectedSize}</span>
+                  PILIH UKURAN: <span className="text-foreground">{selectedSize}</span>
                 </span>
                 <button
                   onClick={() => setSizeGuideOpen(true)}
@@ -475,7 +561,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
                       disabled={isOOS}
                       onClick={() => setSelectedSize(v.size)}
                       className={cn(
-                        "relative text-xs w-12 h-12 border-2 rounded-xl font-bold flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B35]",
+                        "relative text-xs w-20 h-10 border-2 rounded-xl font-bold flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B35]",
                         selectedSize === v.size
                           ? "border-[#FF6B35] bg-[#FF6B35] text-white shadow-sm"
                           : isOOS
@@ -498,155 +584,345 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
             </div>
           )}
 
-          {/* Stock Badge */}
+          {/* Stock Info */}
           {activeVariant && (
-            <div className={cn(
-              "flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-lg w-fit",
-              isOutOfStock
-                ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
-                : activeVariant.stock <= 5
-                  ? "bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400"
-                  : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-500"
-            )}>
+            <div className="flex items-center gap-2 text-xs font-semibold">
+              <span className="text-muted-foreground">Jumlah:</span>
               <span className={cn(
-                "w-1.5 h-1.5 rounded-full",
-                isOutOfStock ? "bg-red-500" : activeVariant.stock <= 5 ? "bg-amber-500 animate-pulse" : "bg-emerald-500"
-              )} />
-              {isOutOfStock
-                ? "Stok habis"
-                : activeVariant.stock <= 5
-                  ? `Hampir habis! Sisa ${activeVariant.stock} pcs`
-                  : `Stok tersedia: ${activeVariant.stock} pcs`}
+                "px-2 py-0.5 rounded-md",
+                isOutOfStock
+                  ? "bg-red-50 text-red-600"
+                  : activeVariant.stock <= 5
+                    ? "bg-amber-50 text-amber-600"
+                    : "bg-emerald-50 text-emerald-600"
+              )}>
+                {isOutOfStock ? "Stok habis" : `Tersisa ${activeVariant.stock} pcs`}
+              </span>
             </div>
           )}
 
-          {/* Quantity + Add to Cart */}
-          <div className="flex items-stretch gap-3">
-            {/* Quantity Stepper */}
-            <div className="flex items-center border-2 border-border rounded-xl bg-card overflow-hidden">
-              <button
-                disabled={quantity <= 1 || isOutOfStock}
-                onClick={() => setQuantity(quantity - 1)}
-                className="w-11 h-12 flex items-center justify-center hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                aria-label="Kurangi jumlah"
+          {/* Stepper + Buttons */}
+          <div className="space-y-4">
+            <div className="flex items-stretch gap-3">
+              {/* Quantity Stepper */}
+              <div className="flex items-center border-2 border-border rounded-xl bg-card overflow-hidden shrink-0">
+                <button
+                  disabled={quantity <= 1 || isOutOfStock}
+                  onClick={() => setQuantity(quantity - 1)}
+                  className="w-10 h-11 flex items-center justify-center hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Kurangi jumlah"
+                >
+                  <Minus className="h-3.5 w-3.5" />
+                </button>
+                <span className="w-8 text-center font-bold text-sm select-none">{quantity}</span>
+                <button
+                  disabled={isOutOfStock || (!!activeVariant && quantity >= activeVariant.stock)}
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="w-10 h-11 flex items-center justify-center hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Tambah jumlah"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                </button>
+              </div>
+
+              {/* Add to Cart Button */}
+              <Button
+                id="btn-add-to-cart"
+                disabled={isOutOfStock}
+                onClick={handleAddToCart}
+                className={cn(
+                  "flex-1 h-11 rounded-xl font-bold text-xs gap-2 transition-all duration-300 shadow-sm border",
+                  addedToCart
+                    ? "bg-emerald-500 hover:bg-emerald-500 text-white border-emerald-500"
+                    : isOutOfStock
+                      ? "bg-muted text-muted-foreground cursor-not-allowed border-transparent"
+                      : "bg-white border-[#FF6B35] text-[#FF6B35] hover:bg-[#FF6B35]/5 shadow-sm"
+                )}
               >
-                <Minus className="h-3.5 w-3.5" />
-              </button>
-              <span className="w-10 text-center font-bold text-base select-none">{quantity}</span>
-              <button
-                disabled={isOutOfStock || (!!activeVariant && quantity >= activeVariant.stock)}
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-11 h-12 flex items-center justify-center hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                aria-label="Tambah jumlah"
-              >
-                <Plus className="h-3.5 w-3.5" />
-              </button>
+                {addedToCart ? (
+                  <>
+                    <Check className="h-4 w-4" />
+                    Ditambahkan!
+                  </>
+                ) : isOutOfStock ? (
+                  "Stok Habis"
+                ) : (
+                  <>
+                    <ShoppingBag className="h-4 w-4" />
+                    Masukkan Keranjang
+                  </>
+                )}
+              </Button>
             </div>
 
-            {/* Add to Cart Button */}
+            {/* Beli Sekarang Button */}
             <Button
-              id="btn-add-to-cart"
               disabled={isOutOfStock}
               onClick={handleAddToCart}
               className={cn(
-                "flex-1 h-12 rounded-xl font-bold text-sm gap-2 transition-all duration-300 shadow-md",
-                addedToCart
-                  ? "bg-emerald-500 hover:bg-emerald-500 text-white shadow-emerald-500/30"
-                  : isOutOfStock
-                    ? "bg-muted text-muted-foreground cursor-not-allowed"
-                    : "bg-zinc-900 dark:bg-zinc-100 hover:bg-[#FF6B35] dark:hover:bg-[#FF6B35] text-white dark:text-zinc-900 dark:hover:text-white shadow-black/10 hover:shadow-[#FF6B35]/30"
+                "w-full h-12 rounded-xl font-bold text-sm transition-all duration-300 shadow-md",
+                isOutOfStock
+                  ? "bg-muted text-muted-foreground cursor-not-allowed"
+                  : "bg-[#FF6B35] hover:bg-orange-600 text-white shadow-[#FF6B35]/20"
               )}
             >
-              {addedToCart ? (
-                <>
-                  <Check className="h-4 w-4" />
-                  Ditambahkan!
-                </>
-              ) : isOutOfStock ? (
-                "Stok Habis"
-              ) : (
-                <>
-                  <ShoppingBag className="h-4 w-4" />
-                  Tambah ke Keranjang
-                </>
-              )}
+              Beli Sekarang
             </Button>
           </div>
 
-          {/* Service Guarantees */}
-          <div className="grid grid-cols-1 gap-2.5 border border-border rounded-xl p-4 bg-muted/20">
-            <div className="flex items-center gap-3 text-sm">
-              <div className="w-8 h-8 rounded-full bg-[#FF6B35]/10 flex items-center justify-center shrink-0">
-                <Truck className="h-4 w-4 text-[#FF6B35]" />
-              </div>
+          {/* Quick Shipping Guarantees */}
+          <div className="grid grid-cols-2 gap-3.5 pt-2">
+            <div className="flex items-center gap-2.5 text-xs">
+              <Truck className="h-4 w-4 text-[#FF6B35] shrink-0" />
               <div>
-                <p className="font-semibold text-xs text-foreground">Gratis Ongkir</p>
-                <p className="text-xs text-muted-foreground">Minimum pembelian Rp 500.000</p>
+                <p className="font-bold text-foreground">Gratis Ongkir</p>
+                <p className="text-[10px] text-muted-foreground">Min. belanja Rp150k</p>
               </div>
             </div>
-            <div className="h-px bg-border/60" />
-            <div className="flex items-center gap-3 text-sm">
-              <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
-                <ShieldCheck className="h-4 w-4 text-emerald-500" />
-              </div>
+            <div className="flex items-center gap-2.5 text-xs">
+              <RefreshCw className="h-4 w-4 text-emerald-600 shrink-0" />
               <div>
-                <p className="font-semibold text-xs text-foreground">Garansi Kualitas</p>
-                <p className="text-xs text-muted-foreground">Bahan premium teruji &amp; tahan lama</p>
-              </div>
-            </div>
-            <div className="h-px bg-border/60" />
-            <div className="flex items-center gap-3 text-sm">
-              <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
-                <RefreshCw className="h-4 w-4 text-blue-500" />
-              </div>
-              <div>
-                <p className="font-semibold text-xs text-foreground">Retur 7 Hari</p>
-                <p className="text-xs text-muted-foreground">Kemudahan penukaran ukuran</p>
+                <p className="font-bold text-foreground">Pengiriman Cepat</p>
+                <p className="text-[10px] text-muted-foreground">Dikirim dalam 1-2 hari</p>
               </div>
             </div>
           </div>
 
-          {/* Product Description Accordion */}
-          <div className="space-y-2">
-            <details className="group border border-border rounded-xl bg-card overflow-hidden" open>
-              <summary className="flex items-center justify-between px-4 py-3.5 text-sm font-bold cursor-pointer select-none list-none hover:bg-muted/50 transition-colors">
-                <span>Deskripsi Produk</span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90 shrink-0" />
-              </summary>
-              <div className="px-4 pb-4">
-                <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {product.description}
-                </p>
-              </div>
-            </details>
+        </div>
+      </div>
 
-            <details className="group border border-border rounded-xl bg-card overflow-hidden">
-              <summary className="flex items-center justify-between px-4 py-3.5 text-sm font-bold cursor-pointer select-none list-none hover:bg-muted/50 transition-colors">
-                <span>Informasi Pengiriman &amp; Retur</span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90 shrink-0" />
-              </summary>
-              <div className="px-4 pb-4 space-y-2 text-sm text-muted-foreground">
-                <p>🚚 Pengiriman reguler: 2–5 hari kerja</p>
-                <p>⚡ Pengiriman express: 1–2 hari kerja (biaya tambahan)</p>
-                <p>🔄 Produk dapat dikembalikan dalam 7 hari setelah diterima jika terdapat cacat produksi.</p>
-                <p>📦 Produk yang sudah dicuci atau dipakai tidak dapat dikembalikan.</p>
-              </div>
-            </details>
-
-            <details className="group border border-border rounded-xl bg-card overflow-hidden">
-              <summary className="flex items-center justify-between px-4 py-3.5 text-sm font-bold cursor-pointer select-none list-none hover:bg-muted/50 transition-colors">
-                <span>Cara Perawatan</span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90 shrink-0" />
-              </summary>
-              <div className="px-4 pb-4 space-y-2 text-sm text-muted-foreground">
-                <p>🫧 Cuci dengan tangan atau mesin cuci pada suhu maks. 30°C</p>
-                <p>🚫 Jangan gunakan pemutih</p>
-                <p>👕 Setrika pada suhu rendah</p>
-                <p>🌿 Keringkan di tempat teduh, hindari sinar matahari langsung</p>
-              </div>
-            </details>
+      {/* ========== Service Guarantees Row (4 icons) ========== */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 py-8 border-t border-b border-border my-12">
+        <div className="flex items-center gap-3 justify-center md:justify-start">
+          <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/20 flex items-center justify-center text-emerald-600 dark:text-emerald-500 shrink-0">
+            <ShieldCheck className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-foreground">Garansi Ori UrbanWear</p>
+            <p className="text-[11px] text-muted-foreground">100% original atau uang kembali</p>
           </div>
         </div>
+        <div className="flex items-center gap-3 justify-center md:justify-start">
+          <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/20 flex items-center justify-center text-blue-600 dark:text-blue-500 shrink-0">
+            <RefreshCw className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-foreground">7 Hari Pengembalian</p>
+            <p className="text-[11px] text-muted-foreground">Tidak cocok? Bisa retur</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 justify-center md:justify-start">
+          <div className="w-10 h-10 rounded-full bg-amber-50 dark:bg-amber-950/20 flex items-center justify-center text-amber-500 shrink-0">
+            <Star className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-foreground">Bahan Berkualitas</p>
+            <p className="text-[11px] text-muted-foreground">Nyaman dipakai setiap hari</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 justify-center md:justify-start">
+          <div className="w-10 h-10 rounded-full bg-[#FFF5F0] dark:bg-orange-950/20 flex items-center justify-center text-[#FF6B35] shrink-0">
+            <Heart className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-foreground">Produk Pilihan</p>
+            <p className="text-[11px] text-muted-foreground">Dipilih &amp; ditestet ketat</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== 3-Column Specifications & Reviews Section ========== */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 pb-16">
+        
+        {/* Column 1: Deskripsi & Detail (4 cols) */}
+        <div className="lg:col-span-4 space-y-8">
+          <div>
+            <h3 className="font-plus-jakarta font-extrabold text-sm uppercase tracking-wider text-foreground mb-4">
+              Deskripsi Produk
+            </h3>
+            <ul className="list-disc pl-4 space-y-2 text-xs text-muted-foreground leading-relaxed">
+              <li>Kualitas premium pilihan terbaik untuk kenyamanan aktivitas sehari-hari.</li>
+              <li>Bahan serat alami berpori memberikan sirkulasi udara optimal.</li>
+              <li>Didesain ramah kulit, tidak menyebabkan iritasi atau rasa gerah.</li>
+              <li>Konstruksi jahitan presisi dan kuat menjamin ketahanan pemakaian jangka panjang.</li>
+              <li>Gaya kasual minimalis yang mudah dipadu-padankan dengan busana favorit.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-plus-jakarta font-extrabold text-sm uppercase tracking-wider text-foreground mb-4">
+              Detail Produk
+            </h3>
+            <div className="border border-border rounded-xl overflow-hidden text-xs">
+              {[
+                { name: "Kategori", val: product.category.name },
+                { name: "Material", val: "Katun Stretch Premium" },
+                { name: "Panjang", val: "Panjang Penuh" },
+                { name: "Pangang", val: "Elastis" },
+                { name: "Motif", val: "Polos" },
+                { name: "Ketebalan", val: "Sedang" },
+                { name: "Kesesuaian Usia", val: "4 - 12 Tahun" },
+                { name: "Jenis Kelamin", val: product.gender ? (product.gender.includes("anak") ? "Anak-anak" : product.gender) : "Unisex" },
+              ].map((row, i) => (
+                <div key={row.name} className={cn("flex justify-between p-3 border-b border-border/50 last:border-0", i % 2 === 0 ? "bg-muted/10" : "bg-card")}>
+                  <span className="font-semibold text-muted-foreground">{row.name}</span>
+                  <span className="text-foreground capitalize">{row.val}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Column 2: Ulasan Produk (5 cols) */}
+        <div className="lg:col-span-5 space-y-6">
+          <h3 className="font-plus-jakarta font-extrabold text-sm uppercase tracking-wider text-foreground mb-2">
+            Ulasan Produk ({reviewCount})
+          </h3>
+          
+          <div className="flex items-center gap-6 p-4 border border-border rounded-xl bg-card">
+            <div className="text-center shrink-0">
+              <p className="text-4xl font-extrabold text-foreground">{rating.toFixed(1)}</p>
+              <div className="flex justify-center gap-0.5 my-1">
+                {[1,2,3,4,5].map(s => <Star key={s} className="h-3 w-3 text-amber-400 fill-amber-400" />)}
+              </div>
+              <p className="text-[10px] text-muted-foreground">{reviewCount} Ulasan</p>
+            </div>
+            <div className="flex-1 space-y-1">
+              {[
+                { star: 5, pct: 85, count: 96 },
+                { star: 4, pct: 15, count: 28 },
+                { star: 3, pct: 0, count: 0 },
+                { star: 2, pct: 0, count: 0 },
+                { star: 1, pct: 0, count: 0 },
+              ].map(row => (
+                <div key={row.star} className="flex items-center gap-2 text-[10px]">
+                  <span className="w-2 font-bold text-muted-foreground">{row.star}</span>
+                  <Star className="h-2.5 w-2.5 text-amber-400 fill-amber-400" />
+                  <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                    <div className="h-full bg-amber-400 rounded-full" style={{ width: `${row.pct}%` }} />
+                  </div>
+                  <span className="w-6 text-right text-muted-foreground">({row.count})</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* User Reviews List */}
+          <div className="space-y-4">
+            {[
+              {
+                user: "Rian Pratama",
+                rating: 5,
+                time: "5 hari lalu",
+                var: "Khaki, 6 Tahun",
+                text: "Bahan bagus, lembut dan nyaman dipakai anak saya. Jahitannya rapi, sesuai harga!",
+                pics: ["https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=80&h=80&fit=crop"]
+              },
+              {
+                user: "Dewi Anggraini",
+                rating: 5,
+                time: "1 minggu lalu",
+                var: "Navy, 4 Tahun",
+                text: "Bagus banget! Pinggang elastisnya pas, anak bebas bergerak.",
+                pics: []
+              },
+              {
+                user: "Budi Santoso",
+                rating: 4,
+                time: "2 minggu lalu",
+                var: "Beige, 8 Tahun",
+                text: "Kualitas oke, warna sesuai gambar. Pengiriman cepat.",
+                pics: []
+              }
+            ].map((rev, i) => (
+              <div key={i} className="border-b border-border/50 pb-4 last:border-0">
+                <div className="flex items-center justify-between mb-1.5">
+                  <div>
+                    <p className="font-bold text-xs text-foreground">{rev.user}</p>
+                    <p className="text-[10px] text-muted-foreground">{rev.time} · Variasi: {rev.var}</p>
+                  </div>
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: rev.rating }).map((_, s) => (
+                      <Star key={s} className="h-3 w-3 text-amber-400 fill-amber-400" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{rev.text}</p>
+                {rev.pics.length > 0 && (
+                  <div className="flex gap-2 mt-2">
+                    {rev.pics.map((p, idx) => (
+                      <div key={idx} className="relative w-12 h-12 rounded-lg overflow-hidden bg-muted border">
+                        <Image src={p} alt="" fill className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <Button variant="outline" className="w-full text-xs font-bold rounded-xl h-10 border-border hover:bg-muted">
+            Lihat Semua Ulasan
+          </Button>
+        </div>
+
+        {/* Column 3: Informasi Pengiriman & Kebijakan (3 cols) */}
+        <div className="lg:col-span-3 space-y-6">
+          <div>
+            <h3 className="font-plus-jakarta font-extrabold text-sm uppercase tracking-wider text-foreground mb-4">
+              Informasi Pengiriman
+            </h3>
+            <div className="border border-border rounded-xl p-4 bg-card text-xs space-y-4">
+              <div className="flex justify-between">
+                <span className="font-semibold text-muted-foreground">Dikirim dari</span>
+                <span className="text-foreground font-bold">Jakarta</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold text-muted-foreground">Ongkos Kirim</span>
+                <div className="text-right">
+                  <span className="text-emerald-600 font-bold block">Gratis Ongkir</span>
+                  <span className="text-[10px] text-muted-foreground">Min. belanja Rp150.000</span>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold text-muted-foreground">Estimasi Sampai</span>
+                <span className="text-foreground font-bold">1 ~ 2 Hari</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-semibold text-muted-foreground">Layanan</span>
+                <span className="text-foreground font-semibold">Reguler - Instant - Same Day</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-plus-jakarta font-extrabold text-sm uppercase tracking-wider text-foreground mb-4">
+              Kebijakan Pengembalian
+            </h3>
+            <div className="border border-border rounded-xl p-4 bg-card text-xs space-y-4">
+              <div className="flex gap-2.5">
+                <div className="w-5 h-5 rounded-full bg-blue-50 dark:bg-blue-950/20 flex items-center justify-center shrink-0">
+                  <RefreshCw className="h-3 w-3 text-blue-500" />
+                </div>
+                <div>
+                  <p className="font-bold text-foreground">Garansi 7 Hari</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Tidak cocok? Ajukan pengembalian dalam 7 hari sejak barang diterima.</p>
+                </div>
+              </div>
+              <div className="h-px bg-border/60" />
+              <div className="flex gap-2.5">
+                <div className="w-5 h-5 rounded-full bg-zinc-100 flex items-center justify-center shrink-0">
+                  <Info className="h-3 w-3 text-zinc-400" />
+                </div>
+                <div>
+                  <p className="font-bold text-foreground">Syarat &amp; Ketentuan</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Produk harus dalam kondisi baru, belum dipakai, dan lengkap dengan label.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* ========== Mobile Sticky CTA Bar ========== */}

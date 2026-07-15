@@ -54,7 +54,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     sortBy: sort,
     page,
     search,
-    limit: 8,
+    limit: 16,
   }).catch(() => ({ products: [], totalPages: 1, currentPage: 1 }))
 
   // Dynamic hero config per category
@@ -235,11 +235,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             {products.length > 0 ? (
               <div className="space-y-10">
                 {/* Product Grid with mid-promo injection */}
-                <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
+                <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-5">
                   {products.map((product: any, idx: number) => {
                     const card = <ProductCard key={product.id} product={product} />
 
-                    // Insert promo banner after 4th product (spanning 2/4 cols)
+                    // Insert promo banner after 4th product (spanning full width)
                     if (idx === 3 && products.length > 4) {
                       return (
                         <React.Fragment key={`frag-${product.id}`}>
@@ -247,7 +247,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                           {/* Promo Banner — spans full grid */}
                           <div
                             key="mid-promo"
-                            className="col-span-2 xl:col-span-4 relative h-[140px] md:h-[180px] rounded-2xl overflow-hidden group/promo"
+                            className="col-span-2 lg:col-span-4 xl:col-span-4 relative h-[140px] md:h-[180px] rounded-2xl overflow-hidden group/promo"
                           >
                             <Image
                               src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=1200&auto=format&fit=crop&q=80"

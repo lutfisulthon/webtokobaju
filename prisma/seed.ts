@@ -320,6 +320,262 @@ async function main() {
         { sku: "JKT-ANK-HD-S", size: "S (8-10 Thn)", color: "Navy", stock: 10 },
         { sku: "JKT-ANK-HD-M", size: "M (11-13 Thn)", color: "Navy", stock: 12 },
       ]
+    },
+
+    // ==========================================
+    // 3 PRODUK BARU PER KATEGORI (3 IMAGES & COLOR VARIANTS)
+    // ==========================================
+    
+    // --- Kemeja Baru ---
+    {
+      name: "Kemeja Flanel Casual Vintage",
+      slug: "kemeja-flanel-casual-vintage",
+      description: "Kemeja flanel premium dengan potongan klasik era 90-an. Nyaman digunakan sebagai outer maupun pakaian kasual utama.",
+      price: 289000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?w=800&auto=format&fit=crop&q=80", // Merah
+      images: [
+        "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80", // Hijau
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80"  // Putih
+      ],
+      gender: "pria",
+      categoryId: kemejaCat.id,
+      variants: [
+        { sku: "KMJ-FL-VNT-RD-M", size: "M", color: "Merah", stock: 20 },
+        { sku: "KMJ-FL-VNT-RD-L", size: "L", color: "Merah", stock: 15 },
+        { sku: "KMJ-FL-VNT-GR-M", size: "M", color: "Hijau", stock: 18 },
+        { sku: "KMJ-FL-VNT-GR-L", size: "L", color: "Hijau", stock: 22 },
+        { sku: "KMJ-FL-VNT-WT-M", size: "M", color: "Putih", stock: 12 },
+        { sku: "KMJ-FL-VNT-WT-L", size: "L", color: "Putih", stock: 10 },
+      ]
+    },
+    {
+      name: "Kemeja Pendek Shanghai Mandarin",
+      slug: "kemeja-pendek-shanghai-mandarin",
+      description: "Kemeja kasual lengan pendek dengan kerah shanghai (mandarin collar) yang bersih, modis, dan sejuk.",
+      price: 259000,
+      discountPrice: 219000,
+      image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80", // Beige
+      images: [
+        "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80", // Navy
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80"  // Putih
+      ],
+      gender: "pria",
+      categoryId: kemejaCat.id,
+      variants: [
+        { sku: "KMJ-SHG-BG-M", size: "M", color: "Beige", stock: 15 },
+        { sku: "KMJ-SHG-BG-L", size: "L", color: "Beige", stock: 20 },
+        { sku: "KMJ-SHG-NV-M", size: "M", color: "Navy", stock: 18 },
+        { sku: "KMJ-SHG-NV-L", size: "L", color: "Navy", stock: 25 },
+        { sku: "KMJ-SHG-WT-M", size: "M", color: "Putih", stock: 10 },
+      ]
+    },
+    {
+      name: "Kemeja Chambray Workwear Classic",
+      slug: "kemeja-chambray-workwear-classic",
+      description: "Kemeja chambray tebal bermotif anyaman oxford denim yang kuat, tahan lama, dan berkarakter vintage gagah.",
+      price: 319000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop&q=80", // Navy
+      images: [
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80", // Putih
+        "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80"  // Beige
+      ],
+      gender: "pria",
+      categoryId: kemejaCat.id,
+      variants: [
+        { sku: "KMJ-CHM-NV-M", size: "M", color: "Navy", stock: 15 },
+        { sku: "KMJ-CHM-NV-L", size: "L", color: "Navy", stock: 15 },
+        { sku: "KMJ-CHM-WT-M", size: "M", color: "Putih", stock: 12 },
+        { sku: "KMJ-CHM-BG-M", size: "M", color: "Beige", stock: 8 },
+      ]
+    },
+
+    // --- Kaos Baru ---
+    {
+      name: "Kaos Henley Retro Vintage",
+      slug: "kaos-henley-retro-vintage",
+      description: "Kaos bermodel kerah henley berkancing dengan katun wafel rajut tebal yang lembut dan berstruktur maskulin.",
+      price: 169000,
+      discountPrice: 139000,
+      image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80", // Putih
+      images: [
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80", // Hitam
+        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&auto=format&fit=crop&q=80"  // Abu
+      ],
+      gender: "pria",
+      categoryId: kaosCat.id,
+      variants: [
+        { sku: "KOS-HNL-WT-M", size: "M", color: "Putih", stock: 25 },
+        { sku: "KOS-HNL-WT-L", size: "L", color: "Putih", stock: 20 },
+        { sku: "KOS-HNL-BK-M", size: "M", color: "Hitam", stock: 15 },
+        { sku: "KOS-HNL-BK-L", size: "L", color: "Hitam", stock: 18 },
+        { sku: "KOS-HNL-AB-M", size: "M", color: "Abu", stock: 12 },
+      ]
+    },
+    {
+      name: "Kaos Garis Stripe Minimalis",
+      slug: "kaos-garis-stripe-minimalis",
+      description: "Kaos katun premium bermotif garis-garis estetik ala Parisian yang santai namun tetap bergaya retro bersih.",
+      price: 149000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80", // Putih
+      images: [
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80", // Hitam
+        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&auto=format&fit=crop&q=80"  // Abu
+      ],
+      gender: "unisex",
+      categoryId: kaosCat.id,
+      variants: [
+        { sku: "KOS-STP-WT-M", size: "M", color: "Putih", stock: 30 },
+        { sku: "KOS-STP-WT-L", size: "L", color: "Putih", stock: 25 },
+        { sku: "KOS-STP-BK-M", size: "M", color: "Hitam", stock: 20 },
+        { sku: "KOS-STP-AB-M", size: "M", color: "Abu", stock: 15 },
+      ]
+    },
+    {
+      name: "Kaos Anak Playful Katun Organik",
+      slug: "kaos-anak-playful-katun-organik",
+      description: "Kaos anak dengan katun organik super lembut yang aman untuk kulit si kecil, tersedia dalam aneka warna cerah.",
+      price: 89000,
+      discountPrice: 69000,
+      image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=800&auto=format&fit=crop&q=80", // Hijau
+      images: [
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80", // Putih
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"  // Hitam
+      ],
+      gender: "anak-anak",
+      categoryId: kaosCat.id,
+      variants: [
+        { sku: "KOS-ANK-PL-GR-4", size: "4 Tahun", color: "Hijau", stock: 20 },
+        { sku: "KOS-ANK-PL-GR-6", size: "6 Tahun", color: "Hijau", stock: 20 },
+        { sku: "KOS-ANK-PL-WT-4", size: "4 Tahun", color: "Putih", stock: 15 },
+        { sku: "KOS-ANK-PL-BK-4", size: "4 Tahun", color: "Hitam", stock: 10 },
+      ]
+    },
+
+    // --- Celana Baru ---
+    {
+      name: "Celana Corduroy Cargo Modern",
+      slug: "celana-corduroy-cargo-modern",
+      description: "Celana panjang kargo berbahan corduroy tebal bertekstur garis yang memberikan kesan retro outdoor tangguh.",
+      price: 359000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80", // Khaki
+      images: [
+        "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80", // Sand
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"  // Hitam
+      ],
+      gender: "pria",
+      categoryId: celanaCat.id,
+      variants: [
+        { sku: "CLN-CDY-KK-30", size: "30", color: "Khaki", stock: 10 },
+        { sku: "CLN-CDY-KK-32", size: "32", color: "Khaki", stock: 15 },
+        { sku: "CLN-CDY-SD-30", size: "30", color: "Sand", stock: 12 },
+        { sku: "CLN-CDY-BK-32", size: "32", color: "Hitam", stock: 10 },
+      ]
+    },
+    {
+      name: "Celana Denim Raw Selvedge",
+      slug: "celana-denim-raw-selvedge",
+      description: "Jeans kaku berpinggiran tenun selvedge premium yang akan memudar (fading) membentuk lekuk kaki Anda seiring pemakaian.",
+      price: 499000,
+      discountPrice: 429000,
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80", // Navy
+      images: [
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80", // Hitam
+        "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80"  // Khaki
+      ],
+      gender: "pria",
+      categoryId: celanaCat.id,
+      variants: [
+        { sku: "CLN-RAW-NV-30", size: "30", color: "Navy", stock: 12 },
+        { sku: "CLN-RAW-NV-32", size: "32", color: "Navy", stock: 15 },
+        { sku: "CLN-RAW-BK-30", size: "30", color: "Hitam", stock: 8 },
+        { sku: "CLN-RAW-KK-32", size: "32", color: "Khaki", stock: 10 },
+      ]
+    },
+    {
+      name: "Celana Jogger Anak Fleece Hangat",
+      slug: "celana-jogger-anak-fleece-hangat",
+      description: "Celana jogger anak santai dari bahan fleece katun bertekstur empuk, aman dipakai bermain luar ruangan maupun bersantai.",
+      price: 139000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80", // Sand
+      images: [
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80", // Hitam
+        "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80"  // Khaki
+      ],
+      gender: "anak-anak",
+      categoryId: celanaCat.id,
+      variants: [
+        { sku: "CLN-ANK-JG-SD-4", size: "4 Tahun", color: "Sand", stock: 15 },
+        { sku: "CLN-ANK-JG-SD-6", size: "6 Tahun", color: "Sand", stock: 15 },
+        { sku: "CLN-ANK-JG-BK-4", size: "4 Tahun", color: "Hitam", stock: 10 },
+        { sku: "CLN-ANK-JG-KK-6", size: "6 Tahun", color: "Khaki", stock: 12 },
+      ]
+    },
+
+    // --- Jaket Baru ---
+    {
+      name: "Jaket Harrington Casual Windbreaker",
+      slug: "jaket-harrington-casual-windbreaker",
+      description: "Jaket gaya mod Inggris dengan lining kotak-kotak tartan legendaris di bagian dalam, tahan angin dan bergaya modis.",
+      price: 389000,
+      discountPrice: 329000,
+      image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80", // Hitam
+      images: [
+        "https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?w=800&auto=format&fit=crop&q=80", // Coklat (Brown)
+        "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80"  // Navy
+      ],
+      gender: "pria",
+      categoryId: jaketCat.id,
+      variants: [
+        { sku: "JKT-HRG-BK-M", size: "M", color: "Hitam", stock: 15 },
+        { sku: "JKT-HRG-BK-L", size: "L", color: "Hitam", stock: 20 },
+        { sku: "JKT-HRG-BR-M", size: "M", color: "Coklat", stock: 10 },
+        { sku: "JKT-HRG-NV-L", size: "L", color: "Navy", stock: 12 },
+      ]
+    },
+    {
+      name: "Sweater Crewneck Fleece Premium",
+      slug: "sweater-crewneck-fleece-premium",
+      description: "Sweater basic minimalis tanpa kupluk berpotongan rileks dari bahan katun fleece premium yang tebal dan lembut.",
+      price: 229000,
+      discountPrice: null,
+      image: "https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?w=800&auto=format&fit=crop&q=80", // Coklat (Brown)
+      images: [
+        "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80", // Navy
+        "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80"  // Hitam
+      ],
+      gender: "unisex",
+      categoryId: jaketCat.id,
+      variants: [
+        { sku: "JKT-SWT-BR-M", size: "M", color: "Coklat", stock: 20 },
+        { sku: "JKT-SWT-BR-L", size: "L", color: "Coklat", stock: 18 },
+        { sku: "JKT-SWT-NV-M", size: "M", color: "Navy", stock: 15 },
+        { sku: "JKT-SWT-BK-L", size: "L", color: "Hitam", stock: 25 },
+      ]
+    },
+    {
+      name: "Jaket Parka Anak Adventure",
+      slug: "jaket-parka-anak-adventure",
+      description: "Jaket parka tebal dengan tudung kepala penahan gerimis, cocok untuk melindungi si kecil saat bertualang outdoor.",
+      price: 249000,
+      discountPrice: 199000,
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80", // Navy
+      images: [
+        "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80", // Hitam
+        "https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?w=800&auto=format&fit=crop&q=80"  // Coklat
+      ],
+      gender: "anak-anak",
+      categoryId: jaketCat.id,
+      variants: [
+        { sku: "JKT-ANK-PK-NV-S", size: "S (8-10 Thn)", color: "Navy", stock: 10 },
+        { sku: "JKT-ANK-PK-NV-M", size: "M (11-13 Thn)", color: "Navy", stock: 12 },
+        { sku: "JKT-ANK-PK-BK-S", size: "S (8-10 Thn)", color: "Hitam", stock: 10 },
+        { sku: "JKT-ANK-PK-BR-M", size: "M (11-13 Thn)", color: "Coklat", stock: 8 },
+      ]
     }
   ];
 

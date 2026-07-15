@@ -54,12 +54,12 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   // Fetch related products (same category, excluding the current one)
   const { products: allRelated } = await getProducts({
     categorySlug: product.category.slug,
-    limit: 5,
+    limit: 7,
   }).catch(() => ({ products: [] }))
 
   const relatedProducts = allRelated
     .filter((p) => p.id !== product.id)
-    .slice(0, 4) // Show up to 4 related products
+    .slice(0, 6) // Show up to 6 related products
 
   return (
     <div className="min-h-screen">
@@ -89,7 +89,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               </a>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
               {relatedProducts.map((p: any) => (
                 <ProductCard key={p.id} product={p} />
               ))}

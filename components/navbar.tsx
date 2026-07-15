@@ -59,27 +59,19 @@ export function Navbar() {
 
   return (
     <div className="w-full flex flex-col">
-      {/* ===== Announcement Bar ===== */}
-      <div className="w-full bg-[#111827] text-white text-center py-2 px-4 text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 border-b border-white/5">
-        <span>🚚</span>
-        <span>
-          <strong>GRATIS ONGKIR</strong> ke Seluruh Indonesia min. belanja Rp150.000
-        </span>
-      </div>
-
       {/* ===== Navigation Header ===== */}
       <header
         className={cn(
           "sticky top-0 z-50 w-full transition-all duration-300 border-b bg-white",
           isScrolled
-            ? "border-border/40 shadow-sm"
+            ? "border-[#E5E7EB] shadow-sm"
             : "border-transparent"
         )}
       >
-        <div className="container mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="container mx-auto px-4 md:px-8 h-[72px] flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="font-plus-jakarta font-extrabold text-xl tracking-wider text-[#111827]">
+            <span className="font-plus-jakarta font-extrabold text-[22px] tracking-wider text-[#111111]">
               URBAN<span className="text-[#FF6B35]">WEAR</span>
             </span>
           </Link>
@@ -90,14 +82,14 @@ export function Navbar() {
               const isHome = link.href === "/"
               const isActive = isHome
                 ? pathname === "/"
-                : activeCategory === link.href.split("=")[1]
+                : activeCategory === link.href.split("=")[1] || (pathname === "/shop" && link.href === "/shop" && !activeCategory)
 
               return (
                 <Link
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    "text-[14px] font-bold transition-colors relative py-5 hover:text-[#FF6B35]",
+                    "text-[14px] font-bold transition-colors relative py-6 hover:text-[#FF6B35]",
                     isActive ? "text-[#FF6B35]" : "text-[#6B7280]"
                   )}
                 >
@@ -111,25 +103,23 @@ export function Navbar() {
           </nav>
 
           {/* Search & Actions */}
-          <div className="flex items-center gap-3 flex-1 justify-end md:flex-initial">
+          <div className="flex items-center gap-2 flex-1 justify-end md:flex-initial">
             {/* Search Input Bar */}
             <form
               onSubmit={handleSearchSubmit}
-              className="hidden md:flex items-center relative w-60"
+              className="hidden md:flex items-center relative w-56 mr-2"
             >
               <Input
                 type="search"
                 placeholder="Cari produk..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-4 pr-9 h-9 w-full rounded-full border-[#E5E7EB] bg-[#F8F8F8] focus-visible:bg-white text-[13px]"
+                className="pl-10 pr-4 h-9 w-full rounded-full border-none bg-[#F8F8F8] text-[13px] placeholder:text-[#6B7280] focus-visible:ring-1 focus-visible:ring-[#E5E7EB]"
               />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] hover:text-[#111827]">
-                <Search className="h-4 w-4" />
-              </button>
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B7280] h-[15px] w-[15px] stroke-[2.5]" />
             </form>
 
-            {/* Theme Toggle (Hidden or subtle) */}
+            {/* Theme Toggle */}
             <ThemeToggle />
 
             {/* Wishlist */}
@@ -137,12 +127,12 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative w-9 h-9 rounded-full text-[#111827] hover:bg-[#F8F8F8]"
+                className="relative w-9 h-9 rounded-full text-[#111111] hover:bg-[#F8F8F8]"
                 aria-label="Wishlist"
               >
-                <Heart className="h-5 w-5" />
+                <Heart className="h-5 w-5 stroke-[1.5]" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-[#FF6B35] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm">
+                  <span className="absolute top-0 right-0 bg-[#FF6B35] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
                     {wishlistCount}
                   </span>
                 )}
@@ -154,12 +144,12 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative w-9 h-9 rounded-full text-[#111827] hover:bg-[#F8F8F8]"
+                className="relative w-9 h-9 rounded-full text-[#111111] hover:bg-[#F8F8F8]"
                 aria-label="Shopping Cart"
               >
-                <ShoppingBag className="h-5 w-5" />
+                <ShoppingBag className="h-5 w-5 stroke-[1.5]" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-[#FF6B35] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm">
+                  <span className="absolute top-0 right-0 bg-[#FF6B35] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
                     {cartCount}
                   </span>
                 )}
@@ -171,10 +161,10 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-9 h-9 rounded-full text-[#111827] hover:bg-[#F8F8F8]"
+                className="w-9 h-9 rounded-full text-[#111111] hover:bg-[#F8F8F8]"
                 aria-label="Profile Account"
               >
-                <User className="h-5 w-5" />
+                <User className="h-5 w-5 stroke-[1.5]" />
               </Button>
             </Link>
 
@@ -182,11 +172,11 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden w-9 h-9 rounded-full text-[#111827]"
+              className="md:hidden w-9 h-9 rounded-full text-[#111111]"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Menu"
             >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isOpen ? <X className="h-5 w-5 stroke-[1.5]" /> : <Menu className="h-5 w-5 stroke-[1.5]" />}
             </Button>
           </div>
         </div>

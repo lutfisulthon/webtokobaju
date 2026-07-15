@@ -59,6 +59,22 @@ export function Navbar() {
 
   return (
     <div className="w-full flex flex-col">
+      {/* Top Banner */}
+      <div className="w-full bg-[#111111] text-white text-[9px] font-extrabold py-2 px-4 flex justify-between items-center border-b border-[#E5E7EB]/10 shrink-0">
+        <div className="flex items-center gap-1">
+          <span className="text-[11px]">🚚</span>
+          <span className="uppercase tracking-[0.12em] text-[#E5E7EB]">Gratis Ongkir min. belanja Rp150.000</span>
+        </div>
+        <div className="hidden md:flex items-center gap-1">
+          <span className="text-[11px]">✨</span>
+          <span className="uppercase tracking-[0.12em] text-[#E5E7EB]">Kualitas Premium • 100% Original</span>
+        </div>
+        <div className="hidden lg:flex items-center gap-1">
+          <span className="text-[11px]">🔄</span>
+          <span className="uppercase tracking-[0.12em] text-[#E5E7EB]">Garansi Tukar 7 Hari</span>
+        </div>
+      </div>
+
       {/* ===== Navigation Header ===== */}
       <header
         className={cn(

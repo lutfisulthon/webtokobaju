@@ -52,19 +52,22 @@ export default async function HomePage() {
   // Main Categories
   const categories = [
     {
-      name: "Pria",
+      name: "PRIA",
+      subtitle: "Temukan gaya terbaikmu",
       desc: "Lihat Koleksi",
       image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&auto=format&fit=crop&q=80",
       href: "/shop?category=pria",
     },
     {
-      name: "Wanita",
+      name: "WANITA",
+      subtitle: "Elegan dalam setiap gaya",
       desc: "Lihat Koleksi",
       image: "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?w=800&auto=format&fit=crop&q=80",
       href: "/shop?category=wanita",
     },
     {
-      name: "Anak-anak",
+      name: "ANAK-ANAK",
+      subtitle: "Nyaman, stylish, dan penuh warna",
       desc: "Lihat Koleksi",
       image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=800&auto=format&fit=crop&q=80",
       href: "/shop?category=anak-anak",
@@ -77,30 +80,30 @@ export default async function HomePage() {
       name: "Rian Pratama",
       city: "Jakarta",
       photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-      review: "Kualitas produknya premium banget, bahan nyaman dan jahitannya rapi. Pengiriman juga cepat!",
+      review: "Kualitas produknya premium banget, bahan nyaman dan jahitannya rapi. Desainnya juga modern dan elegan!",
     },
     {
       name: "Siti Rahma",
       city: "Bandung",
       photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
-      review: "Desainnya modern dan stylish. Sudah belanja beberapa kali dan selalu puas!",
+      review: "Model bajunya kekinian semua, pengiriman cepat dan packaging rapi. Puas belanja di UrbanWear!",
     },
     {
       name: "Denny Wijaya",
       city: "Surabaya",
       photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-      review: "Barang sesuai deskripsi, warna tidak mengecewakan. UrbanWear top!",
+      review: "Anak saya suka banget bajunya, bahannya lembut dan warnanya bagus-bagus.",
     },
   ]
 
   // Instagram Gallery
   const igPhotos = [
-    "https://images.unsplash.com/photo-1516826957135-700ede19c6ce?w=400&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1550614000-4b95d4ebfa24?w=400&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1489987707023-af81165a2f58?w=400&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=400&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?w=400&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1555529669-2269763671c3?w=400&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=400&auto=format&fit=crop&q=80",
   ]
 
   return (
@@ -129,77 +132,122 @@ export default async function HomePage() {
       {/* ===== 3. Categories Section ===== */}
       <section className="container mx-auto px-4 md:px-8 py-12 md:py-16">
         <div className="text-center space-y-2 mb-12">
-          <h2 className="font-plus-jakarta font-bold text-[28px] tracking-tight text-[#111111]">
+          <h2 className="font-plus-jakarta font-bold text-[26px] tracking-tight text-[#111111]">
             Belanja Berdasarkan Kategori
           </h2>
-          <p className="text-[14px] text-[#6B7280]">
-            Temukan koleksi pilihan terbaik dari setiap kategori.
+          <p className="text-[13px] text-[#6B7280]">
+            Temukan koleksi terbaik sesuai gaya Anda.
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
           {categories.map((cat) => (
             <Link
               key={cat.name}
               href={cat.href}
-              className="group flex flex-col items-center text-center"
+              className="group relative flex flex-col aspect-[3/4] rounded-[20px] overflow-hidden bg-[#F8F8F8] shadow-sm hover:shadow-md transition-all duration-500"
             >
-              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-[#F8F8F8] mb-4">
-                <Image
-                  src={cat.image}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+              <Image
+                src={cat.image}
+                alt={cat.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+              />
+              {/* Subtle dark gradient overlay at bottom only */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+              
+              {/* Minimal text overlay bottom-left */}
+              <div className="absolute bottom-6 left-6 text-white text-left z-10">
+                <h3 className="font-plus-jakarta font-extrabold text-[18px] tracking-[0.15em] uppercase text-white mb-1">
+                  {cat.name}
+                </h3>
+                <span className="text-[11px] font-bold tracking-widest uppercase text-white/80 border-b border-white/30 pb-0.5 group-hover:border-white transition-all">
+                  Lihat Koleksi &rarr;
+                </span>
               </div>
-              <h3 className="font-plus-jakarta font-bold text-[18px] text-[#111111] mb-1">{cat.name}</h3>
-              <span className="text-[12px] font-bold text-[#FF6B35] flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
-                {cat.desc} <span className="text-lg leading-none">&rarr;</span>
-              </span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* ===== 4. Flash Sale Section ===== */}
-      <FlashSale products={products} />
+      {/* ===== 4. Collection Banner ===== */}
+      <section className="container mx-auto px-4 md:px-8 py-8">
+        <div className="relative w-full h-[320px] md:h-[420px] rounded-[24px] overflow-hidden group">
+          <Image
+            src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=1600&auto=format&fit=crop&q=80"
+            alt="Koleksi Musim Terbaru"
+            fill
+            className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-[1.03]"
+            sizes="100vw"
+          />
+          {/* Subtle dark elegant overlay */}
+          <div className="absolute inset-0 bg-black/45 transition-colors duration-500 group-hover:bg-black/50" />
+
+          <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6 md:p-12 text-white">
+            <span className="inline-block text-[11px] font-extrabold uppercase tracking-[0.25em] text-[#FF6B35] mb-3">
+              NEW SEASON
+            </span>
+            <h2 className="font-plus-jakarta font-bold text-2xl md:text-4xl tracking-tight leading-tight text-white mb-3">
+              Koleksi Musim Terbaru
+            </h2>
+            <p className="text-[13px] md:text-[14px] text-white/80 max-w-md leading-relaxed mb-6 font-medium">
+              Tampil maksimal dengan koleksi pilihan untuk setiap momen spesialmu.
+            </p>
+            <Link
+              href="/shop"
+              className="bg-white hover:bg-zinc-100 text-[#111111] font-bold text-xs h-10 px-8 rounded-xl flex items-center justify-center transition-all shadow-md w-fit"
+            >
+              Belanja Sekarang
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* ===== 5. Popular Products Section ===== */}
       <HomePopularProducts products={products} />
 
       {/* ===== 6. Customer Testimonials ===== */}
-      <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 border-t border-[#E5E7EB]">
+      <section className="container mx-auto px-4 md:px-8 py-12 md:py-16 border-t border-[#E5E7EB] relative group/reviews">
         <div className="flex items-end justify-between gap-4 mb-10">
           <h2 className="font-plus-jakarta font-bold text-[22px] tracking-tight text-[#111111]">
-            Ulasan Pelanggan
+            Apa Kata Mereka
           </h2>
           <Link
             href="/reviews"
             className="text-[13px] font-bold text-[#FF6B35] hover:text-[#FF6B35]/80 flex items-center gap-1.5 transition-colors"
           >
-            Lihat semua &rarr;
+            Lihat Semua &rarr;
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <div key={t.name} className="bg-white rounded-2xl border border-[#E5E7EB] p-8 flex flex-col space-y-5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-[#FF6B35] text-4xl leading-none font-serif">&ldquo;</div>
-              <p className="text-[14px] text-[#111111] leading-relaxed flex-grow italic font-medium">
-                {t.review}
-              </p>
-              <div className="flex items-center gap-4 pt-2">
-                <div className="relative w-11 h-11 rounded-full overflow-hidden bg-[#F8F8F8]">
-                  <Image src={t.photo} alt={t.name} fill sizes="44px" className="object-cover" />
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((t) => (
+              <div key={t.name} className="bg-white rounded-[24px] border border-[#E5E7EB] p-8 flex flex-col space-y-4 shadow-sm hover:shadow-md transition-all duration-300">
+                {/* 5 Stars Rating */}
+                <div className="flex items-center gap-0.5">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} className="h-4 w-4 text-amber-400 fill-amber-400" />
+                  ))}
                 </div>
-                <div>
-                  <h4 className="font-bold text-[13px] text-[#111111]">{t.name}</h4>
-                  <span className="text-[11px] text-[#6B7280]">{t.city}</span>
+                <p className="text-[13px] text-[#333333] leading-relaxed flex-grow italic font-medium">
+                  &ldquo;{t.review}&rdquo;
+                </p>
+                <div className="flex items-center gap-4 pt-2 border-t border-zinc-100">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-[#F8F8F8]">
+                    <Image src={t.photo} alt={t.name} fill sizes="40px" className="object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[13px] text-[#111111]">{t.name}</h4>
+                    <span className="text-[10px] text-[#22C55E] font-bold tracking-wider uppercase block mt-0.5">
+                      ✓ Verified Purchase
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 

@@ -9,18 +9,18 @@ import { cn } from "@/lib/utils"
 
 const SLIDES = [
   {
-    tagline: "NEW SEASON ARRIVALS",
-    headline: "Ekspresikan Gayamu Tanpa Batas",
-    subheadline: "Temukan koleksi fashion premium untuk pria, wanita, dan anak-anak dengan kualitas terbaik untuk aktivitas sehari-hari.",
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1800&auto=format&fit=crop&q=80",
-    theme: "light", // light gradient overlay
+    tagline: "NEW COLLECTION 2024",
+    headline: "Ekspresikan Gayamu,\nTanpa Batas.",
+    subheadline: "Koleksi pilihan untuk pria, wanita, dan anak-anak dengan desain modern dan kualitas terbaik.",
+    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1800&auto=format&fit=crop&q=80",
+    theme: "dark",
   },
   {
     tagline: "MINIMALIST & CLASSIC",
     headline: "Koleksi Esensial Sehari-hari",
     subheadline: "Didesain untuk kenyamanan maksimal dengan potongan modern yang bersih dan minimalis.",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1800&auto=format&fit=crop&q=80",
-    theme: "dark", // dark gradient overlay for white text on dark background
+    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1800&auto=format&fit=crop&q=80",
+    theme: "light",
   },
   {
     tagline: "ELEGANT & TIMELESS",
@@ -94,7 +94,7 @@ export function HeroCarousel() {
                   
                   <h1
                     className={cn(
-                      "font-plus-jakarta font-extrabold text-4xl sm:text-5xl md:text-[56px] tracking-tight leading-[1.1]",
+                      "font-plus-jakarta font-extrabold text-4xl sm:text-5xl md:text-[56px] tracking-tight leading-[1.1] whitespace-pre-line",
                       slide.theme === "dark" ? "text-white" : "text-[#111111]"
                     )}
                   >
